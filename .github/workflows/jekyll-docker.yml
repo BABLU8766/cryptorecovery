@@ -1,6 +1,6 @@
 name:github/workflows/jekyll-docker.yml
 
-on:
+on:github/workflows/jekyll-docker.yml
   push:
     branches: [ "main" ]
   pull_request:
