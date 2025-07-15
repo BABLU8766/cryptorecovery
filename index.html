@@ -12,104 +12,129 @@
       background: linear-gradient(to bottom, #00ffd5, #007a74);
       color: #e0e0e0;
     }
-    header {
+    header, nav, section, footer {
+      padding: 20px;
       text-align: center;
-      padding: 30px 20px;
+    }
+    header {
       background: rgba(0, 0, 0, 0.6);
-    }
-    header h1 {
-      font-size: 2rem;
-      color: #fff;
-    }
-    #wallet-counter, #lost-wallets {
-      background: white;
-      color: black;
-      font-weight: bold;
-      margin: 15px auto;
-      padding: 8px 18px;
-      border-radius: 20px;
-      display: inline-block;
-      font-size: 1rem;
     }
     nav {
       background: #111;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 10px;
     }
     nav a {
       color: #00ffd5;
-      font-weight: bold;
+      margin: 0 10px;
       text-decoration: none;
+      font-weight: bold;
     }
-    nav a:hover {
-      color: white;
-    }
-    section {
-      padding: 30px 20px;
-    }
-    #banner-img {
-      width: 100%;
-      max-height: 250px;
-      object-fit: cover;
-      display: block;
+    #wallet-counter, #lost-wallets {
+      background: #fff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 10px;
     }
     #partners {
-      text-align: center;
-      background: white;
-      color: black;
+      background: #fff;
+      color: #000;
       border-radius: 10px;
-      padding: 30px;
     }
     .logos {
       display: flex;
       justify-content: center;
       gap: 30px;
       flex-wrap: wrap;
-      margin-top: 20px;
     }
     .logos img {
       height: 60px;
     }
-    #track-wallet {
-      background: #111;
-      padding: 30px;
-      color: white;
-      text-align: center;
-      border-radius: 10px;
-    }
-    #track-wallet input, #track-wallet select, #track-wallet button {
+    #track-wallet input, #track-wallet select, #track-wallet button,
+    #phantom-tracker input, #phantom-tracker button {
       padding: 10px;
       margin: 10px;
-      border-radius: 5px;
       border: none;
+      border-radius: 5px;
     }
     #coin-prices {
       background: #1b1b1b;
-      padding: 30px;
-      text-align: center;
+      color: #fff;
       border-radius: 10px;
-    }
-    #coin-prices h2 {
-      color: #00ffd5;
-      margin-bottom: 20px;
     }
     #coin-prices li {
       list-style: none;
-      padding: 8px 0;
+      margin: 5px 0;
     }
     footer {
       background: #000;
-      text-align: center;
-      padding: 20px;
       color: #aaa;
+      margin-top: 30px;
     }
     .tracker {
       font-size: 0.9rem;
       margin-top: 10px;
     }
   </style>
+</head>
+<body>
+  <header>
+    <h1>Crypto Recovery by Bablu</h1>
+    <div id="wallet-counter">Over 5000 Wallets Recovered!</div>
+    <div id="lost-wallets">Tracking 50,000+ Lost Wallets!</div>
+  </header>
+
+  <img src="https://img.freepik.com/free-photo/bitcoin-crypto-digital-currency_53876-163449.jpg" alt="Banner" style="width:100%; max-height:250px; object-fit:cover;" />
+
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#track-wallet">Track Wallet</a>
+    <a href="#phantom-tracker">Phantom Tracker</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="partners">
+    <h2>Supported Wallets</h2>
+    <div class="logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Phantom_logo.svg/512px-Phantom_logo.svg.png" alt="Phantom Wallet" />
+      <img src="https://seeklogo.com/images/M/metamask-logo-09EDE53DBD-seeklogo.com.png" alt="MetaMask Wallet" />
+    </div>
+  </section>
+
+  <section id="track-wallet">
+    <h2>Track Your Lost Wallet</h2>
+    <select>
+      <option>-- Choose Wallet --</option>
+      <option>Phantom</option>
+      <option>MetaMask</option>
+    </select><br/>
+    <input type="text" placeholder="Wallet ID e.g. #AE233" />
+    <button onclick="alert('Tracking feature coming soon')">Track Now</button>
+  </section>
+
+  <!-- ✅ NEW PHANTOM TRACKER SECTION -->
+  <section id="phantom-tracker">
+    <h2>🔍 Real Phantom Wallet Tracker</h2>
+    <input type="text" id="phantomAddress" placeholder="Enter your Phantom wallet address" />
+    <button onclick="trackPhantom()">Check Wallet</button>
+    <div id="phantomResult" style="margin-top:15px;"></div>
+  </section>
+
+  <section id="coin-prices">
+    <h2>Live Crypto Prices</h2>
+    <ul>
+      <li><strong>Bitcoin (BTC):</strong> <span id="btc">Loading...</span></li>
+      <li><strong>Ethereum (ETH):</strong> <span id="eth">Loading...</span></li>
+      <li><strong>Dogecoin (DOGE):</strong> <span id="doge">Loading...</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; 2025 Crypto Recovery by Bablu. All rights reserved.
+    <div class="tracker" id="tracker">Loading visits...</div>
+  </footer>
+
+  <!-- Scripts -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const tracker = document.getElementById('tracker');
@@ -126,12 +151,10 @@
 
       const walletText = document.getElementById('wallet-counter');
       let walletCount = 5000;
-      if (walletText) {
-        setInterval(() => {
-          walletCount += Math.floor(Math.random() * 3);
-          walletText.textContent = `Over ${walletCount.toLocaleString()} Wallets Recovered!`;
-        }, 3000);
-      }
+      setInterval(() => {
+        walletCount += Math.floor(Math.random() * 3);
+        walletText.textContent = `Over ${walletCount.toLocaleString()} Wallets Recovered!`;
+      }, 3000);
 
       loadPrices();
     });
@@ -149,57 +172,43 @@
         document.getElementById("doge").textContent = "N/A";
       }
     }
+
+    async function trackPhantom() {
+      const address = document.getElementById("phantomAddress").value.trim();
+      const resultDiv = document.getElementById("phantomResult");
+
+      if (!address || address.length < 20) {
+        resultDiv.innerHTML = "❌ Please enter a valid Phantom address.";
+        return;
+      }
+
+      resultDiv.innerHTML = "⏳ Fetching wallet data...";
+
+      try {
+        const res = await fetch(`https://api.mainnet-beta.solana.com`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "getBalance",
+            params: [address]
+          })
+        });
+
+        const data = await res.json();
+
+        if (data && data.result) {
+          const sol = data.result.value / 1e9;
+          resultDiv.innerHTML = `✅ Wallet is active<br><strong>Balance:</strong> ${sol} SOL`;
+        } else {
+          resultDiv.innerHTML = "❌ Wallet not found or inactive.";
+        }
+      } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = "⚠️ Error checking wallet. Try again later.";
+      }
+    }
   </script>
-</head>
-<body>
-  <header>
-    <h1>Crypto Recovery by Bablu</h1>
-    <div id="wallet-counter">Over 5000 Wallets Recovered!</div>
-    <div id="lost-wallets">Tracking 50,000+ Lost Wallets!</div>
-  </header>
-
-  <img id="banner-img" src="https://img.freepik.com/free-photo/bitcoin-crypto-digital-currency_53876-163449.jpg" alt="Banner">
-
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#track-wallet">Track Wallet</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <section id="partners">
-    <h2>Supported Wallets</h2>
-    <div class="logos">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Phantom_logo.svg/512px-Phantom_logo.svg.png" alt="Phantom Wallet">
-      <img src="https://seeklogo.com/images/M/metamask-logo-09EDE53DBD-seeklogo.com.png" alt="MetaMask Wallet">
-    </div>
-  </section>
-
-  <section id="track-wallet">
-    <h2>Track Your Lost Wallet</h2>
-    <label>Select Wallet:</label><br />
-    <select>
-      <option>-- Choose Wallet --</option>
-      <option>Phantom</option>
-      <option>MetaMask</option>
-      <option>Trust Wallet</option>
-    </select><br />
-    <label>Enter Wallet ID:</label><br />
-    <input type="text" placeholder="e.g. AEXX2345" /><br />
-    <button onclick="alert('Tracking feature coming soon!')">Track Now</button>
-  </section>
-
-  <section id="coin-prices">
-    <h2>Live Crypto Prices</h2>
-    <ul>
-      <li><strong>Bitcoin (BTC):</strong> <span id="btc">Loading...</span></li>
-      <li><strong>Ethereum (ETH):</strong> <span id="eth">Loading...</span></li>
-      <li><strong>Dogecoin (DOGE):</strong> <span id="doge">Loading...</span></li>
-    </ul>
-  </section>
-
-  <footer>
-    &copy; 2025 Crypto Recovery by Bablu. All rights reserved.
-    <div class="tracker" id="tracker">Loading visits...</div>
-  </footer>
 </body>
 </html>
