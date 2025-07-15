@@ -1,73 +1,240 @@
-   @import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Recovery by Bablu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const tracker = document.getElementById('tracker');
+      if (tracker) {
+        try {
+          fetch('https://api.countapi.xyz/hit/crypto-recovery-by-bablu/visits')
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(data => {
+              tracker.textContent = `Total Visits: ${data.value}`;
+            })
+            .catch(err => {
+              console.warn("Visit counter unavailable:", err);
+              tracker.textContent = "Visits: [unavailable]";
+            });
+        } catch (e) {
+          tracker.textContent = "Visits: [unavailable]";
+        }
+      }
 
-   body {
-     margin: 0;
-     background: #0f172a;
-     color: #e0e7ff;
-     font-family: "Orbitron", monospace;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     min-height: 100vh;
-   }
+      const walletText = document.getElementById('wallet-counter');
+      let walletCount = 5000;
+      if (walletText) {
+        setInterval(() => {
+          walletCount += Math.floor(Math.random() * 3);
+          walletText.textContent = `Over ${walletCount.toLocaleString()} Wallets Recovered!`;
+        }, 3000);
+      }
 
-   .app {
-     max-width: 600px;
-     width: 90vw;
-     background: #1e293b;
-     border-radius: 12px;
-     box-shadow: 0 0 20px #6366f1;
-     padding: 2rem;
-     text-align: center;
-   }
+      loadPrices();
+    });
 
-   header h1 {
-     font-size: 2rem;
-     color: #6366f1;
-     margin-bottom: 1rem;
-     text-shadow: 0 0 8px #6366f1;
-   }
+    async function loadPrices() {
+      const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=usd");
+      const data = await response.json();
+      document.getElementById("btc").textContent = "$" + data.bitcoin.usd;
+      document.getElementById("eth").textContent = "$" + data.ethereum.usd;
+      document.getElementById("doge").textContent = "$" + data.dogecoin.usd;
+    }
+  </script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to bottom, #00ffd5, #007a74);
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: #fff;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #c0fffa;
+    }
+    #wallet-counter {
+      background: white;
+      color: black;
+      font-weight: bold;
+      margin: 20px auto;
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 20px;
+      font-size: 1.1rem;
+    }
+    #lost-wallets {
+      background: white;
+      color: black;
+      font-weight: bold;
+      margin: 20px auto;
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 20px;
+      font-size: 1.1rem;
+    }
+    #banner-img {
+      width: 100%;
+      display: block;
+      max-height: 250px;
+      object-fit: cover;
+    }
+    nav {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 10px;
+    }
+    nav a {
+      color: #00ffd5;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    section {
+      padding: 40px 20px;
+    }
+    #coin-prices {
+      background: #1b1b1b;
+      padding: 30px 20px;
+      color: #ffffff;
+      text-align: center;
+      border-radius: 10px;
+    }
+    #coin-prices h2 {
+      color: #00ffd5;
+      margin-bottom: 20px;
+    }
+    #coin-prices ul {
+      list-style: none;
+      padding: 0;
+    }
+    #coin-prices li {
+      padding: 8px 0;
+      font-size: 1.1rem;
+    }
+    #partners {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      color: black;
+      border-radius: 10px;
+    }
+    #partners h2 {
+      margin-bottom: 20px;
+    }
+    .logos {
+      display: flex;
+      overflow-x: auto;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+    .logos img {
+      height: 60px;
+      transition: transform 0.3s;
+    }
+    .logos img:hover {
+      transform: scale(1.1);
+    }
+    #track-wallet {
+      background: #111;
+      padding: 40px 20px;
+      color: #fff;
+      text-align: center;
+      border-radius: 10px;
+    }
+    #track-wallet input,
+    #track-wallet select,
+    #track-wallet button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+    }
+    .tracker {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Crypto Recovery by Bablu</h1>
+    <p>Professional Wallet Recovery Services You Can Trust</p>
+    <div id="wallet-counter">Over 5,001 Wallets Recovered!</div>
+    <div id="lost-wallets">Tracking 50,000 Lost Wallets!</div>
+  </header>
 
-   .wish-input {
-     margin-bottom: 2rem;
-   }
+  <img id="banner-img" src="https://img.freepik.com/free-photo/bitcoin-crypto-digital-currency_53876-163449.jpg" alt="Banner" />
 
-   .wish-input input {
-     padding: 0.5rem;
-     width: 70%;
-     border: none;
-     border-radius: 5px;
-     margin-right: 0.5rem;
-   }
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#track-wallet">Track Wallet</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-   .wish-input button {
-     padding: 0.5rem 1rem;
-     border: none;
-     border-radius: 5px;
-     background-color: #6366f1;
-     color: white;
-     cursor: pointer;
-   }
+  <section id="partners">
+    <h2>Supported Wallets</h2>
+    <div class="logos">
+      <img src="https://cryptologos.cc/logos/phantom-phantom-logo.png" alt="Phantom Wallet" style="height: 60px;">
+      <img src="https://seeklogo.com/images/M/metamask-logo-09EDE53DBD-seeklogo.com.png" alt="MetaMask Wallet" style="height: 60px;">
+      <img src="https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png" alt="Solana Wallet" style="height: 60px;">
+    </div>
+  </section>
 
-   .wish-list {
-     margin-top: 2rem;
-   }
+  <section id="track-wallet">
+    <h2>Track Your Lost Wallet</h2>
+    <label for="walletType">Select Wallet Type:</label>
+    <select id="walletType">
+      <option>-- Select Wallet --</option>
+      <option>Phantom</option>
+      <option>MetaMask</option>
+      <option>Trust Wallet</option>
+    </select>
+    <br />
+    <label for="walletId">Enter Your Wallet ID:</label>
+    <input id="walletId" placeholder="e.g. #A2435" />
+    <br />
+    <button onclick="alert('Tracking feature coming soon!')">Check Status</button>
+  </section>
 
-   .wish-list ul {
-     list-style-type: none;
-     padding: 0;
-   }
+  <section id="coin-prices">
+    <h2>Live Crypto Prices</h2>
+    <ul>
+      <li><strong>Bitcoin (BTC):</strong> <span id="btc">Loading...</span></li>
+      <li><strong>Ethereum (ETH):</strong> <span id="eth">Loading...</span></li>
+      <li><strong>Dogecoin (DOGE):</strong> <span id="doge">Loading...</span></li>
+    </ul>
+  </section>
 
-   .wish-list li {
-     background: #3b4b69;
-     margin: 0.5rem 0;
-     padding: 0.5rem;
-     border-radius: 5px;
-   }
-
-   footer p {
-     margin-top: 2rem;
-     font-size: 0.9rem;
-     color: #94a3b8;
-   }
-   
+  <footer>
+    &copy; 2025 Crypto Recovery by Bablu. All rights reserved.
+    <div class="tracker" id="tracker">Loading visits...</div>
+  </footer>
+</body>
+</html>
